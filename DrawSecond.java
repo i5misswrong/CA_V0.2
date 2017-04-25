@@ -6,21 +6,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.Vector;
-
 import javax.swing.JPanel;
 
-
 public class DrawSecond extends JPanel implements Runnable{
-	//´´½¨»­°åÀà Íê³ÉĞĞÈË¡¢µØÍ¼µÄ»æÖÆºÍÖØ»æ Íê³ÉĞĞÈËµÄ³õÊ¼»¯
-	Data data=new Data();//³õÊ¼»¯Êı¾İÀà
-	Vector<Peo> peoVector=new Vector<Peo>();//´´½¨ĞĞÈË¼¯ºÏ  ±£Ö¤Ïß³Ì°²È« ²ÉÓÃvector
-	volatile int mapMat[][]=new int[data.w][data.w];//´´½¨ĞĞÈË×ø±êÊı×é Ê¹ÓÃvolatileËøËÀÏß³Ì
+	//åˆ›å»ºç”»æ¿ç±» å®Œæˆè¡Œäººã€åœ°å›¾çš„ç»˜åˆ¶å’Œé‡ç»˜ å®Œæˆè¡Œäººçš„åˆå§‹åŒ–
+	Data data=new Data();//åˆå§‹åŒ–æ•°æ®ç±»
+	Vector<Peo> peoVector=new Vector<Peo>();//åˆ›å»ºè¡Œäººé›†åˆ  ä¿è¯çº¿ç¨‹å®‰å…¨ é‡‡ç”¨vector
+	volatile int mapMat[][]=new int[data.w][data.w];//åˆ›å»ºè¡Œäººåæ ‡æ•°ç»„ ä½¿ç”¨volatileé”æ­»çº¿ç¨‹
 	public DrawSecond(){
-		int peoNum=12;//ĞĞÈËÊıÁ¿
-		int peoId=1;//ĞĞÈËID
-		
+		int peoNum=12;//è¡Œäººæ•°é‡
+		int peoId=1;//è¡ŒäººID
 //		---------------------------------
-//		----´Ë´¦Îª²âÊÔÓÃ ÔÚÌØ¶¨Î»ÖÃ²úÉúĞĞÈË-----
+//		----æ­¤å¤„ä¸ºæµ‹è¯•ç”¨ åœ¨ç‰¹å®šä½ç½®äº§ç”Ÿè¡Œäºº-----
 //		//Peo peo1=new Peo(0,300);
 //		//Peo peo2=new Peo(0,350);
 //		Peo peo3=new Peo(0,400);
@@ -50,44 +47,42 @@ public class DrawSecond extends JPanel implements Runnable{
 //		peoVector.add(peo3);
 //		peoVector.add(peo4);
 //		---------------------------------
-//		-------------ÕâÊÇËæ»úÉú³ÉĞĞÈË-------------
+//		-------------è¿™æ˜¯éšæœºç”Ÿæˆè¡Œäºº-------------
 		for (int i=0;i<peoNum;i++){
-			int x=((int)(Math.random()*10)*data.pw);//ÔÚ1-10²úÉúËæ»úÊı  X pw¾ÍµÃµ½È·¶¨×ø±ê
+			int x=((int)(Math.random()*10)*data.pw);//åœ¨1-10äº§ç”Ÿéšæœºæ•°  X pwå°±å¾—åˆ°ç¡®å®šåæ ‡
 			int y=((int)(Math.random()*10)*data.pw);
-			Peo peo=new Peo(x,y);//ĞÂ½¨ĞĞÈË
-			mapMat[y/data.pw][x/data.pw]=peoId;//ÉèÖÃĞĞÈË×ø±êµÄÖµ Î¨Ò»
+			Peo peo=new Peo(x,y);//æ–°å»ºè¡Œäºº
+			mapMat[y/data.pw][x/data.pw]=peoId;//è®¾ç½®è¡Œäººåæ ‡çš„å€¼ å”¯ä¸€
 			peoId++;//Id++
-			peo.setMapMat(mapMat);//½«Êı×éÉèÖÃµ½peoÀà
-			peo.setPeople(peoVector);//½«¼¯ºÏÉèÖÃµ½peoÀà
-			Thread t=new Thread(peo);//´´½¨Ïß³Ì
-			t.start();//Æô¶¯Ïß³Ì
-			peoVector.add(peo);//½«ĞĞÈËÌí¼Óµ½¼¯ºÏ
+			peo.setMapMat(mapMat);//å°†æ•°ç»„è®¾ç½®åˆ°peoç±»
+			peo.setPeople(peoVector);//å°†é›†åˆè®¾ç½®åˆ°peoç±»
+			Thread t=new Thread(peo);//åˆ›å»ºçº¿ç¨‹
+			t.start();//å¯åŠ¨çº¿ç¨‹
+			peoVector.add(peo);//å°†è¡Œäººæ·»åŠ åˆ°é›†åˆ
 		}
 //		-----------------------------------
-		
 	}
-	public void paint (Graphics g){//ÖØĞ´»æÍ¼·½·¨
-		
-		g.setColor(Color.WHITE);//ÉèÖÃÑÕÉ«
+	public void paint (Graphics g){//é‡å†™ç»˜å›¾æ–¹æ³•
+		g.setColor(Color.WHITE);//è®¾ç½®é¢œè‰²
 		//super.paint(g);
-		g.fillRect(0, 0, data.w,data.w);//»­³öÃæ°å
-		this.drawMap(g);//»æÖÆµØÍ¼
-//		----------µ±ĞĞÈËÔÚ³ö¿ÚÊ±µÄ¶¯×÷----------------
+		g.fillRect(0, 0, data.w,data.w);//ç”»å‡ºé¢æ¿
+		this.drawMap(g);//ç»˜åˆ¶åœ°å›¾
+//		----------å½“è¡Œäººåœ¨å‡ºå£æ—¶çš„åŠ¨ä½œ----------------
 		for(int i=0;i<peoVector.size();i++){
-			Peo peo=peoVector.get(i);//»ñÈ¡ĞĞÈË
-			if(peo.isGoExit()){//Èç¹ûÃ»ÓĞµ½´ï³ö¿Ú
-				this.drawPeo(g, peo.getX(), peo.getY());//»­³öĞĞÈË
+			Peo peo=peoVector.get(i);//è·å–è¡Œäºº
+			if(peo.isGoExit()){//å¦‚æœæ²¡æœ‰åˆ°è¾¾å‡ºå£
+				this.drawPeo(g, peo.getX(), peo.getY());//ç”»å‡ºè¡Œäºº
 			}
 			else{
-				//Èç¹ûµ½´ï³ö¿Ú
-				mapMat[peo.getY()/data.pw][peo.getX()/data.pw]=0;//½«ĞĞÈË×ø±êÉèÖÃÎª0
-				peoVector.remove(i);//½«ĞĞÈË´Ó¼¯ºÏÒÆ³ı
+				//å¦‚æœåˆ°è¾¾å‡ºå£
+				mapMat[peo.getY()/data.pw][peo.getX()/data.pw]=0;//å°†è¡Œäººåæ ‡è®¾ç½®ä¸º0
+				peoVector.remove(i);//å°†è¡Œäººä»é›†åˆç§»é™¤
 			}
 		}
 	}
 	public void drawMap(Graphics g){
-		//»æÖÆµØÍ¼·½·¨
-		//ÏÂÃæ×¢ÊÍÎª  Ãæ°åÎ»ÓÚ´°¿ÚÖĞ¼ä  ×óÉÏ½Ç×ø±êÍùÓÒÏÂ·½Æ½ÒÆ50px
+		//ç»˜åˆ¶åœ°å›¾æ–¹æ³•
+		//ä¸‹é¢æ³¨é‡Šä¸º  é¢æ¿ä½äºçª—å£ä¸­é—´  å·¦ä¸Šè§’åæ ‡å¾€å³ä¸‹æ–¹å¹³ç§»50px
 		//g.fillRect(data.fwx, data.fwx, data.w, data.w);
 //		g.setColor(Color.black);
 //		for (int i=1;i<(data.w/data.pw);i++){
@@ -97,7 +92,7 @@ public class DrawSecond extends JPanel implements Runnable{
 //			g.drawLine(data.fwx, data.pw*i+data.fwx, data.w+data.fwx, data.pw*i+data.fwx);
 //		}
 //		Graphics2D g2=(Graphics2D)g;
-//		Stroke stroke=new BasicStroke(5.0f);//ÉèÖÃÏß¿íÎª3.0
+//		Stroke stroke=new BasicStroke(5.0f);//è®¾ç½®çº¿å®½ä¸º3.0
 //		g2.setStroke(stroke);
 //		g2.drawLine(data.fwx,data.fwx, data.fwx,data.fwx+data.w);
 //		g2.drawLine(data.fwx,data.fwx+data.w, data.fwx+data.w,data.fwx+data.w);
@@ -105,31 +100,31 @@ public class DrawSecond extends JPanel implements Runnable{
 //		g2.drawLine(data.fwx,data.fwx, data.fwx+data.exitX,data.fwx);
 //		g2.drawLine(data.fwx+data.exitX+data.exitL,data.fwx, data.fwx+data.w,data.fwx);
 		g.setColor(Color.black);
-		//»æÖÆÖĞ¼äÏßÌõ
-		for (int i=1;i<(data.w/data.pw);i++){//ÊúÏß
-			g.drawLine(data.pw*i, 0, data.pw*i, data.w);//Ã¿¸ôpw ±ã»æÖÆÒ»¸öÏßÌõ 
+		//ç»˜åˆ¶ä¸­é—´çº¿æ¡
+		for (int i=1;i<(data.w/data.pw);i++){//ç«–çº¿
+			g.drawLine(data.pw*i, 0, data.pw*i, data.w);//æ¯éš”pw ä¾¿ç»˜åˆ¶ä¸€ä¸ªçº¿æ¡ 
 		}
-		for (int i=1;i<(data.w/data.pw);i++){//ºáÏß
+		for (int i=1;i<(data.w/data.pw);i++){//æ¨ªçº¿
 			g.drawLine(0, data.pw*i, data.w, data.pw*i);
 		}
-		Graphics2D g2=(Graphics2D)g;//»æÖÆ¿íÏßÌõ
-		Stroke stroke=new BasicStroke(5.0f);//ÉèÖÃÏß¿í
-		g2.setStroke(stroke);//£¿
-		//»æÖÆ±ß¿ò
+		Graphics2D g2=(Graphics2D)g;//ç»˜åˆ¶å®½çº¿æ¡
+		Stroke stroke=new BasicStroke(5.0f);//è®¾ç½®çº¿å®½
+		g2.setStroke(stroke);//ï¼Ÿ
+		//ç»˜åˆ¶è¾¹æ¡†
 		g2.drawLine(0,0, 0,data.w);
 		g2.drawLine(0,data.w, data.w,data.w);
 		g2.drawLine(data.w,0, data.w,data.w);
-		g2.drawLine(0,0, data.exitX,0);//×îÉÏÃæ×ó±ß±ß¿ò
-		g2.drawLine(data.exitX+data.exitL,0, data.w,0);//×îÉÏÃæÓÒ±ß±ß¿ò
+		g2.drawLine(0,0, data.exitX,0);//æœ€ä¸Šé¢å·¦è¾¹è¾¹æ¡†
+		g2.drawLine(data.exitX+data.exitL,0, data.w,0);//æœ€ä¸Šé¢å³è¾¹è¾¹æ¡†
 	}
-	public void drawPeo(Graphics g,int x,int y){//»æÖÆĞĞÈË
+	public void drawPeo(Graphics g,int x,int y){//ç»˜åˆ¶è¡Œäºº
 			g.setColor(Color.red);
 			g.fill3DRect(x,y, data.pw, data.pw,false);
 	}
 	public void run(){
 		while(true){
-			this.repaint();//ÖØ»æ
+			this.repaint();//é‡ç»˜
 		}
-		
 	}
 }
+

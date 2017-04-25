@@ -1,39 +1,31 @@
 package CA;
-
 import java.util.Arrays;
 import java.util.Vector;
-
 public class Peo implements Runnable{
-	//ĞĞÈËÀà  °üº¬¶¯×÷ºÍ¹æÔò
-	Data data=new Data();//³õÊ¼»¯Êı¾İÀà
-	
-	int x;//ĞĞÈË×ø±ê
+	//è¡Œäººç±»  åŒ…å«åŠ¨ä½œå’Œè§„åˆ™
+	Data data=new Data();//åˆå§‹åŒ–æ•°æ®ç±»
+	int x;//è¡Œäººåæ ‡
 	int y;
-	int speed=data.speed;//ĞĞÈËËÙ¶È
-	volatile int mapMat[][];//ĞĞÈË×ø±ê  µÄÊı×é  ÓÃvolatileÀ´ËøËÀÏß³Ì
-	Vector<Peo> people=new Vector<Peo>();//ĞĞÈË¼¯ºÏ
-	
-	public Peo(int x,int y){//¹¹Ôì·½·¨
+	int speed=data.speed;//è¡Œäººé€Ÿåº¦
+	volatile int mapMat[][];//è¡Œäººåæ ‡  çš„æ•°ç»„  ç”¨volatileæ¥é”æ­»çº¿ç¨‹
+	Vector<Peo> people=new Vector<Peo>();//è¡Œäººé›†åˆ
+	public Peo(int x,int y){//æ„é€ æ–¹æ³•
 		this.x=x;
 		this.y=y;
 	}
-//	----------getterºÍsetter·½·¨------------------
+//	----------getterå’Œsetteræ–¹æ³•------------------
 	public int[][] getMapMat() {
 		return mapMat;
 	}
 	public void setMapMat(int[][] mapMat) {
 		this.mapMat = mapMat;
 	}
-
-	
 	public Vector<Peo> getPeople() {
 		return people;
 	}
 	public void setPeople(Vector<Peo> people) {
 		this.people = people;
 	}
-
-	
 	public int getX() {
 		return x;
 	}
@@ -46,7 +38,7 @@ public class Peo implements Runnable{
 	public void setY(int y) {
 		this.y = y;
 	}
-//	------------ĞĞÈËÒÆ¶¯·½·¨----------
+//	------------è¡Œäººç§»åŠ¨æ–¹æ³•----------
 	public void moveDown(){
 		y+=speed;
 	}
@@ -60,11 +52,9 @@ public class Peo implements Runnable{
 		x+=speed;
 	}
 	public void noMove(){
-		
-		System.out.println("×²µ½ĞĞÈË Ô­µØÍ£Ö¹");
+		System.out.println("æ’åˆ°è¡Œäºº åŸåœ°åœæ­¢");
 	}
-	
-	public void peoMove(int direction){//¸ù¾İ¸ø¶¨·½Ïòµ÷ÓÃÒÆ¶¯·½·¨
+	public void peoMove(int direction){//æ ¹æ®ç»™å®šæ–¹å‘è°ƒç”¨ç§»åŠ¨æ–¹æ³•
 		switch (direction) {
 		case 2:
 			moveUp();
@@ -82,19 +72,19 @@ public class Peo implements Runnable{
 			noMove();
 		}
 	}
-	public int decideDirection(){//È·¶¨ĞĞÈË·½Ïò
-		int direction=0;//·½Ïò
-		int leaveUp=y;//ÉÏ
-		int leaveDown=data.w-y;//ÏÂ
-		int leaveLeft=x;//×ø
-		int leaveRight=data.w-x;//ÓÒ
-		int ran[]=new int [4];//4¸ö·½ÏòµÄÊı×é  ÓÃÓÚÅÅĞò
+	public int decideDirection(){//ç¡®å®šè¡Œäººæ–¹å‘
+		int direction=0;//æ–¹å‘
+		int leaveUp=y;//ä¸Š
+		int leaveDown=data.w-y;//ä¸‹
+		int leaveLeft=x;//å
+		int leaveRight=data.w-x;//å³
+		int ran[]=new int [4];//4ä¸ªæ–¹å‘çš„æ•°ç»„  ç”¨äºæ’åº
 		ran[0]=leaveDown;
 		ran[1]=leaveLeft;
 		ran[2]=leaveRight;
 		ran[3]=leaveUp;
-		Arrays.sort(ran);//ÅÅĞò
-//		È¡³ö×îĞ¡µÄÄÇ¸öÖµ  ÓëÉÏÃæµÄÖµ±È½Ï  ÄÇ¸ö×îĞ¡ÍùÄÄ¸ö·½ÏòÒÆ¶¯
+		Arrays.sort(ran);//æ’åº
+//		å–å‡ºæœ€å°çš„é‚£ä¸ªå€¼  ä¸ä¸Šé¢çš„å€¼æ¯”è¾ƒ  é‚£ä¸ªæœ€å°å¾€å“ªä¸ªæ–¹å‘ç§»åŠ¨
 		if(ran[0]==leaveUp){
 			direction=2;
 		}
@@ -109,59 +99,56 @@ public class Peo implements Runnable{
 		}
 		return direction;
 	}
-	public int decideDirectionOnWall(){//ĞĞÈËµ½´ïÇ½Ê±  ·½ÏòÑ¡È¡
+	public int decideDirectionOnWall(){//è¡Œäººåˆ°è¾¾å¢™æ—¶  æ–¹å‘é€‰å–
 		int direction=0;
-		if(x==0&&y==0){//×óÉÏ½Ç
+		if(x==0&&y==0){//å·¦ä¸Šè§’
 			direction=6;
 		}
-		else if(x==data.w-data.pw&&y==0){//ÓÒÉÏ½Ç
+		else if(x==data.w-data.pw&&y==0){//å³ä¸Šè§’
 			direction=4;
 		}
-		else if(x==0&&y==data.w-data.pw){//×óÏÂ½Ç
+		else if(x==0&&y==data.w-data.pw){//å·¦ä¸‹è§’
 			direction=2;
 		}
-		else if(x==data.w-data.pw&&y==data.w-data.pw){//ÓÒÏÂ½Ç
+		else if(x==data.w-data.pw&&y==data.w-data.pw){//å³ä¸‹è§’
 			direction=2;
 		}
 		else{
-			if(y==0){//ÉÏ±ßµÄÇ½
-				if(x>data.exitX){//ÓÒ°ë²¿·Ö
+			if(y==0){//ä¸Šè¾¹çš„å¢™
+				if(x>data.exitX){//å³åŠéƒ¨åˆ†
 					direction=4;
 				}
-				else{//×ó°ë²¿·Ö
+				else{//å·¦åŠéƒ¨åˆ†
 					direction=6;
 				}
 			}
-			if(y==data.w-data.pw){//ÏÂ±ßµÄÇ½
-				if(x>data.exitX){//ÓÒ°ë²¿·Ö
+			if(y==data.w-data.pw){//ä¸‹è¾¹çš„å¢™
+				if(x>data.exitX){//å³åŠéƒ¨åˆ†
 					direction=6;
 				}
 				else{
-					direction=4;//×ó°ë²¿·Ö
+					direction=4;//å·¦åŠéƒ¨åˆ†
 				}
 			}
-			if(x==0||x==data.w-data.pw){//×óÓÒÁ½±ßµÄÇ½
-				
+			if(x==0||x==data.w-data.pw){//å·¦å³ä¸¤è¾¹çš„å¢™
 				direction=2;
 			}
 		}
 		return direction;
 	}
-	public boolean isTouchOther(int sy,int sx,int d){//¼ì²âĞĞÈËÊÇ·ñÏà×²£¬´«Èëx£¬yºÍ·½Ïò
-		//Èç¹û×² ÎªTRUE  Èç¹ûÃ»×² Îªfalse
+	public boolean isTouchOther(int sy,int sx,int d){//æ£€æµ‹è¡Œäººæ˜¯å¦ç›¸æ’ï¼Œä¼ å…¥xï¼Œyå’Œæ–¹å‘
+		//å¦‚æœæ’ ä¸ºTRUE  å¦‚æœæ²¡æ’ ä¸ºfalse
 		boolean flag=true;
-	
-		int peoIdCpoy=mapMat[sy][sx];//»ñÈ¡peoId
-		
+		int peoIdCpoy=mapMat[sy][sx];//è·å–peoId
 		switch (d) {
-		case 2://Èç¹û·½ÏòÎªÉÏ
-			if(mapMat[sy-1][sx]==0){//Èç¹ûÉÏÃæµÄµãÎª0
-				mapMat[sy-1][sx]=peoIdCpoy;//½«ÉÏÃæµÄµãÉèÖÃÎªpeoid
-				mapMat[sy][sx]=0;//½«Ô­À´µÄµÄµãÉèÎª0
-				flag=false;//ÉèÖÃÎªÃ»×²
+		case 2://å¦‚æœæ–¹å‘ä¸ºä¸Š
+			if(mapMat[sy-1][sx]==0){//å¦‚æœä¸Šé¢çš„ç‚¹ä¸º0
+				mapMat[sy-1][sx]=peoIdCpoy;//å°†ä¸Šé¢çš„ç‚¹è®¾ç½®ä¸ºpeoid
+				mapMat[sy][sx]=0;//å°†åŸæ¥çš„çš„ç‚¹è®¾ä¸º0
+				flag=false;//è®¾ç½®ä¸ºæ²¡æ’
 			}
 			break;
-//		-----------Ò»ÏÂÍ¬Àí-----------
+//		-----------ä¸€ä¸‹åŒç†-----------
 		case 4:
 			if(mapMat[sy][sx-1]==0){
 				mapMat[sy][sx-1]=peoIdCpoy;
@@ -188,62 +175,61 @@ public class Peo implements Runnable{
 		}
 		return flag;
 	}
-	public boolean isTouchWall(){//¼ì²âÊÇ·ñ×²Ç½
-		//Èç¹û×²  ÉèÎªfalse  Èç¹ûÃ»×² ÉèÎªTRUE
+	public boolean isTouchWall(){//æ£€æµ‹æ˜¯å¦æ’å¢™
+		//å¦‚æœæ’  è®¾ä¸ºfalse  å¦‚æœæ²¡æ’ è®¾ä¸ºTRUE
 		boolean flag=true;
-		if(x==0||y==0||x==data.w-data.pw||y==data.w-data.pw){//¼ì²âĞĞÈËÊÇ·ñµ½´ï±ß½ç
+		if(x==0||y==0||x==data.w-data.pw||y==data.w-data.pw){//æ£€æµ‹è¡Œäººæ˜¯å¦åˆ°è¾¾è¾¹ç•Œ
 			flag=false;
 		}
 		return flag;
 	}
-	public boolean isGoExit(){//¼ì²âÊÇ·ñµ½´ï³ö¿Ú
-		//Èç¹ûµ½´ï³ö¿Ú  ÉèÖÃÎªfalse  Èç¹ûÃ»µ½  ÉèÖÃÎªTRUE
+	public boolean isGoExit(){//æ£€æµ‹æ˜¯å¦åˆ°è¾¾å‡ºå£
+		//å¦‚æœåˆ°è¾¾å‡ºå£  è®¾ç½®ä¸ºfalse  å¦‚æœæ²¡åˆ°  è®¾ç½®ä¸ºTRUE
 		boolean flag=true;
-		if(y==0){//ÊÇ·ñÔÚÉÏ±ßÇ½
-			if(x==data.exitX||x==data.exitX+1||x==data.exitX-1){//ÊÇ·ñÔÚ³ö¿Ú¸½¼ş
+		if(y==0){//æ˜¯å¦åœ¨ä¸Šè¾¹å¢™
+			if(x==data.exitX||x==data.exitX+1||x==data.exitX-1){//æ˜¯å¦åœ¨å‡ºå£é™„ä»¶
 				flag=false;
 			}
 		}
 		return flag;
 	}
-	
 	public void run(){
-		//µã¿ªÔËĞĞ°´Å¥  µ½ ĞĞÈË¿ªÊ¼ÔË¶¯µÄÊ±¼ä¼ä¸ô
+		//ç‚¹å¼€è¿è¡ŒæŒ‰é’®  åˆ° è¡Œäººå¼€å§‹è¿åŠ¨çš„æ—¶é—´é—´éš”
 		try {
             Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
 		while(true){
-			if(isGoExit()){//¼ì²âÊÇ·ñµ½´ï³ö¿Ú
-				if(isTouchWall()){//¼ì²âÊÇ·ñ×²Ç½ Èç¹ûÃ»×²
-					int direction=decideDirection();//»ñÈ¡ÏÂÒ»²½µÄ·½Ïò
-					//¼ì²âÊÇ·ñÓëĞĞÈËÏà×²
+			if(isGoExit()){//æ£€æµ‹æ˜¯å¦åˆ°è¾¾å‡ºå£
+				if(isTouchWall()){//æ£€æµ‹æ˜¯å¦æ’å¢™ å¦‚æœæ²¡æ’
+					int direction=decideDirection();//è·å–ä¸‹ä¸€æ­¥çš„æ–¹å‘
+					//æ£€æµ‹æ˜¯å¦ä¸è¡Œäººç›¸æ’
 					if(isTouchOther(y/data.pw, x/data.pw, direction)){
-						//×²ÁË
-						System.out.println("×²µ½ĞĞÈËÁË");
+						//æ’äº†
+						System.out.println("æ’åˆ°è¡Œäººäº†");
 					}
-					else{//Ã»×²
+					else{//æ²¡æ’
 						peoMove(direction);
 					}
 				}
-				else{//Èç¹û×²Ç½ÁË
-					//»ñÈ¡ÏÂÒ»²½·½Ïò
+				else{//å¦‚æœæ’å¢™äº†
+					//è·å–ä¸‹ä¸€æ­¥æ–¹å‘
 					int directionOnWall=decideDirectionOnWall();
-					//¼ì²âÊÇ·ñÓëĞĞÈËÏà×²
+					//æ£€æµ‹æ˜¯å¦ä¸è¡Œäººç›¸æ’
 					if(isTouchOther(y/data.pw, x/data.pw, directionOnWall)){
-						//×²ÁË
-						System.out.println("×²µ½ĞĞÈËÁË");
+						//æ’äº†
+						System.out.println("æ’åˆ°è¡Œäººäº†");
 					}
-					else{//Ã»×²
+					else{//æ²¡æ’
 						peoMove(directionOnWall);
 					}
 				}
 			}
 			else{
-				System.out.println("ÅÜ³öÈ¥Ò»¸ö");
+				System.out.println("è·‘å‡ºå»ä¸€ä¸ª");
 			}
-			//ĞĞÈËÃ¿´ÎµÄÔË¶¯¼ä¸ô
+			//è¡Œäººæ¯æ¬¡çš„è¿åŠ¨é—´éš”
 			try {
 	            Thread.sleep(1000);
 	        } catch (Exception e) {

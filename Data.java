@@ -1,20 +1,18 @@
 package CA;
 
 public class Data {
-	int w=500; //·¿¼ä³¤¿í
-	int fw=600;//´°¿Ú³¤¿í
-	int fwx=50; //jpanel ¾àÀë×óÉÏ·½×ø±ê
-	
-	int h=10; //Ñ°»¶´ÎÊı
-	int pw=50;//ĞĞÈË³¤ ¿í   Ã¿¸öĞ¡·½¸ñµÄ³¤¶È
+	int w=500; //æˆ¿é—´é•¿å®½
+	int fw=600;//çª—å£é•¿å®½
+	int fwx=50; //jpanel è·ç¦»å·¦ä¸Šæ–¹åæ ‡
+	int h=10; //å¯»æ¬¢æ¬¡æ•°
+	int pw=50;//è¡Œäººé•¿ å®½   æ¯ä¸ªå°æ–¹æ ¼çš„é•¿åº¦
 	int hw=30;
-	int inpx=50;//ĞĞÈË³õÊ¼x
-	int inpy=50;//ĞĞÈË³õÊ¼y
-	int roomSize=w/pw; //Ò»¹²ÓĞ¼¸ĞĞ¼¸ÁĞ
-	int exitX=(roomSize/2)*pw;//³ö¿Úx
-	int exitY=0;//³ö¿Úy
-	int exitL=pw;//³ö¿Ú³¤¶È
-	int speed=50;//ÒÆ¶¯ËÙ¶È
+	int inpx=50;//è¡Œäººåˆå§‹x
+	int inpy=50;//è¡Œäººåˆå§‹y
+	int roomSize=w/pw; //ä¸€å…±æœ‰å‡ è¡Œå‡ åˆ—
+	int exitX=(roomSize/2)*pw;//å‡ºå£x
+	int exitY=0;//å‡ºå£y
+	int exitL=pw;//å‡ºå£é•¿åº¦
+	int speed=50;//ç§»åŠ¨é€Ÿåº¦
 	int view=200;
-	 
 }
